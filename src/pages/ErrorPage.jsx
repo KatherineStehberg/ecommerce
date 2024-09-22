@@ -15,11 +15,11 @@ const ErrorPage = () => {
             variant="h4"
             sx={{ color: Colors.primaryDark, mb: "2rem" }}
           >
-            Work in progress...
+            En construcción...
           </Typography>
           <Typography variant="h6" sx={{ mb: { xs: "2rem" } }}>
-            Our exciting new website will launch soon. Come back and check it
-            out.
+            Nuestro emocionante nuevo sitio web se lanzará pronto. Vuelve a
+            visitarnos y échale un vistazo.
           </Typography>
           <Link to={"/"}>
             <MyButton
@@ -27,7 +27,7 @@ const ErrorPage = () => {
               startIcon={<ArrowBackIcon />}
               sx={{ marginTop: "1rem" }}
             >
-              Back Home
+              Volver a Inicio
             </MyButton>
           </Link>
         </Box>
@@ -37,7 +37,7 @@ const ErrorPage = () => {
             height: { xs: 400, md: 450 },
           }}
           image="/images/Working.png"
-          title="We are working on the site"
+          title="Estamos trabajando en el sitio"
         />
       </MainImageBox>
     </PageContainer>
