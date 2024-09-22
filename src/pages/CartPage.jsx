@@ -39,12 +39,12 @@ const CartPage = () => {
     <PageContainer>
       {cartProducts.length === 0 ? (
         <Typography variant="h4" sx={{ color: Colors.primary }}>
-          Your Cart is empty
+          Tu carrito está vacío
         </Typography>
       ) : (
         <>
           <Typography variant="h4" sx={{ textAlign: "center", mb: "3rem" }}>
-            MY CART
+            MI CARRITO
           </Typography>
           <Box>
             {cartProducts.map((item) => (
@@ -76,20 +76,20 @@ const CartPage = () => {
                   <AmountButtons>
                     <RemoveIcon
                       onClick={() => dispatch(deleteProduct(item))}
-                      aria-label="Remove one unit"
+                      aria-label="Eliminar una unidad"
                     />
 
                     <Typography>{item.quantity}</Typography>
                     <AddIcon
                       onClick={() => dispatch(addProduct(item))}
-                      aria-label="Add one unit"
+                      aria-label="Agregar una unidad"
                     />
                   </AmountButtons>
 
                   <Button
                     sx={{ marginLeft: "1rem" }}
                     onClick={() => dispatch(deleteAllProduct(item))}
-                    aria-label="delete all units of this product"
+                    aria-label="Eliminar todas las unidades de este producto"
                   >
                     <DeleteIcon color="primary" sx={{ fontSize: "2rem" }} />
                   </Button>
