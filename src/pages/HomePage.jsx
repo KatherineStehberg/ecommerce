@@ -12,8 +12,6 @@ import {
 } from "@mui/material";
 import { Colors } from "../styles/theme/theme";
 import { PageContainer, MainImageBox } from "../styles/page/containers";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { MyButton } from "../styles/buttons/buttons";
 
 const HomePage = () => {
   const imageList = [
@@ -36,13 +34,10 @@ const HomePage = () => {
           <Typography variant="h5" sx={{ color: Colors.primaryLight, mb: "1rem" }}>
             Descubre una nueva forma de consumir responsablemente.
           </Typography>
-          <Typography variant="body1" sx={{ color: Colors.secondary }}>
+          <Typography variant="body1" sx={{ color: Colors.text }}>
             En biodiversidad.cl te ofrecemos productos que respetan el medio ambiente, 
             apoyan la economía local y promueven la sostenibilidad.
           </Typography>
-          <MyButton component={Link} to="./ProductsPage" sx={{ mt: "2rem" }}>
-            Ver Productos <ArrowForwardIcon />
-          </MyButton>
         </CardContent>
         <CardMedia
           sx={{
