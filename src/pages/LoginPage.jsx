@@ -13,15 +13,26 @@ const LoginPage = () => {
         sx={{ width: "20rem", margin: "0 auto", padding: "1.5rem 1rem" }}
       >
         <Typography variant="h4" mb="1rem">
-          Login
+          Iniciar Sesión
         </Typography>
+
         <Login />
-        <Divider textAlign="center" />
-        <Typography variant="subtitle1" mt="2rem">
-          Don't have an account?{" "}
-          <Link to="/register" sx={{ color: Colors.secondary }}>
-            Sign up
-          </Link>
+
+        <Divider sx={{ my: "1.5rem" }} />
+
+        <Typography variant="body2" textAlign="center">
+          ¿No tienes una cuenta?
+        </Typography>
+
+        <Typography
+          component={Link}
+          to="/register"
+          variant="body2"
+          textAlign="center"
+          color={Colors.primary}
+          sx={{ textDecoration: "none", display: "block", mt: "0.5rem" }}
+        >
+          Regístrate aquí
         </Typography>
       </Paper>
     </PageContainer>
