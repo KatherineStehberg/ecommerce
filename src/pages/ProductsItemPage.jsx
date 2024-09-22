@@ -15,153 +15,97 @@ import {
   IconButton,
   Snackbar,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import CloseIcon from "@mui/icons-material/Close";
-import { AmountButtons } from "../styles/buttons/buttons";
-import { PageContainer } from "../styles/page/containers";
-import { Colors } from "../styles/theme/theme";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-const ProductsItemPage = () => {
-  const dispatch = useDispatch();
-  const { isAuth } = useAuth();
-  const { error, loading, product } = useSelector((state) => state.products);
-  const { cartProducts } = useSelector((state) => state.cart);
-  const productQuantity = cartProducts?.find((item) => item.id === product.id);
-  const quantity = productQuantity?.quantity;
+// Componente principal
+const BiodiversidadPage = () => {
+  const { user } = useAuth(); // Obtener usuario autenticado
+  const [open, setOpen] = useState(false); // Estado para el Snackbar
+  const { cart } = useSelector((state) => state.cart); // Obtener carrito del estado global
+  const dispatch = useDispatch(); // Crear un dispatch para enviar acciones de Redux
 
-  const [open, setOpen] = useState(false);
-
-  const handleClick = () => {
-    setOpen(true);
+  // Función para agregar productos al carrito
+  const handleAddProduct = (product) => {
+    dispatch(addProduct(product));
+    setOpen(true); // Mostrar el Snackbar
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
+  // Función para eliminar productos del carrito
+  const handleDeleteProduct = (productId) => {
+    dispatch(deleteProduct(productId));
+    setOpen(true); // Mostrar el Snackbar
   };
-
-  const action = (
-    <>
-      <Link to="/login">
-        <Button color="primary" size="small" onClick={handleClose}>
-          log in
-        </Button>
-      </Link>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleClose}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </>
-  );
 
   return (
-    <>
-      {loading ? (
-        <Loading />
-      ) : error !== "" ? (
-        <Error />
-      ) : (
-        <PageContainer>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: { xs: "column", md: "row" },
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <CardMedia
-              sx={{
-                width: { xs: 300, md: 1000 },
-                height: { xs: 400, md: 450 },
-                margin: "0 auto",
-                mb: { xs: "2rem" },
-                marginRight: { md: "3.5rem" },
-              }}
-              image={product.image}
-            />
-            <Box sx={{ width: { xs: "90vw", md: "80vw" } }}>
-              <Typography
-                variant="h6"
-                sx={{ color: Colors.primary, mb: "1rem" }}
-                onClick={() => console.log(quantity)}
-              >
-                {product.category}
-              </Typography>
-              <Typography variant="h5" sx={{ mb: "1rem" }}>
-                {product.title}
-              </Typography>
-              <Typography variant="h6" sx={{ mb: "1rem" }}>
-                Rating {product.rating && product.rating.rate}
-              </Typography>
-              <Typography variant="body1" sx={{ mb: "2rem" }}>
-                {product.description.substring(0, 300)}
-              </Typography>
-              <Typography variant="h4" sx={{ mb: "1.5rem" }}>
-                ${product.price}
-              </Typography>
+    <Container>
+      <Typography variant="h4" gutterBottom>
+        Bienvenido a la tienda de biodiversidad
+      </Typography>
+      
+      {/* Mostrar un mensaje de carga mientras se obtienen los productos */}
+      <Loading />
 
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                {quantity ? (
-                  <AmountButtons>
-                    <RemoveIcon
-                      onClick={() => dispatch(deleteProduct(product))}
-                      aria-label="Remove one unit"
-                    />
+      {/* Si hay un error, se muestra el componente de Error */}
+      <Error />
 
-                    <Typography>{quantity ? quantity : 0}</Typography>
-                    <AddIcon
-                      onClick={() => dispatch(addProduct(product))}
-                      aria-label="Add one unit"
-                    />
-                  </AmountButtons>
-                ) : (
-                  <Button
-                    variant="outlined"
-                    onClick={() =>
-                      isAuth ? dispatch(addProduct(product)) : handleClick()
-                    }
-                    aria-label="Buy"
-                  >
-                    Buy
-                  </Button>
-                )}
-
-                <Link to={"/cart"} aria-label="Go to Cart">
-                  <Button variant="contained" sx={{ marginLeft: "1rem" }}>
-                    Go to Cart
-                  </Button>
-                </Link>
+      <Stack spacing={2}>
+        {cart.length === 0 ? (
+          <Typography variant="h6">
+            Tu carrito está vacío. ¡Explora nuestros productos y añade tus favoritos!
+          </Typography>
+        ) : (
+          cart.map((product) => (
+            <Box key={product.id} display="flex" alignItems="center">
+              <CardMedia
+                component="img"
+                image={product.image}
+                alt={product.name}
+                sx={{ width: 100, height: 100 }}
+              />
+              <Box sx={{ flexGrow: 1, marginLeft: 2 }}>
+                <Typography variant="h6">{product.name}</Typography>
+                <Typography variant="body2">{product.description}</Typography>
               </Box>
+              <Typography variant="h6">${product.price}</Typography>
+              <IconButton
+                aria-label="Eliminar del carrito"
+                onClick={() => handleDeleteProduct(product.id)}
+              >
+                <DeleteIcon />
+              </IconButton>
             </Box>
-          </Box>
+          ))
+        )}
+      </Stack>
 
-          <Snackbar
-            open={open}
-            autoHideDuration={6000}
-            onClose={handleClose}
-            message="To add an item to your cart, you need to"
-            action={action}
-            anchorOriginBottomLeft
-          />
-        </PageContainer>
-      )}
-    </>
+      {/* Botón para agregar productos */}
+      <Button
+        variant="contained"
+        startIcon={<ShoppingCartIcon />}
+        onClick={() => handleAddProduct({ id: 1, name: "Producto Ejemplo", description: "Descripción del producto", price: 100, image: "ruta-imagen" })}
+        sx={{ marginTop: 2 }}
+      >
+        Añadir al carrito
+      </Button>
+
+      {/* Enlace a la página de checkout */}
+      <Link to="/checkout">
+        <Button variant="outlined" sx={{ marginTop: 2 }}>
+          Ir a pagar
+        </Button>
+      </Link>
+
+      {/* Snackbar para mostrar mensajes */}
+      <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={() => setOpen(false)}
+        message="Producto añadido/eliminado del carrito"
+      />
+    </Container>
   );
 };
 
-export default ProductsItemPage;
+export default BiodiversidadPage;
+
