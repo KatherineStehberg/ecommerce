@@ -65,7 +65,7 @@ const Navbar = () => {
             to={`/${
               page === "home" ? "" : page === "about" ? "waiting" : page
             }`}
-            aria-label={`Go to page: ${
+            aria-label={`Ir a página: ${
               page === "home" ? "Home" : page === "about" ? "about" : page
             }`}
           >
@@ -80,7 +80,7 @@ const Navbar = () => {
         ))}
       </ButtonGroup>
       <Divider color="white" />
-      <Link to={`/account`} aria-label="Go to my Account">
+      <Link to={`/account`} aria-label="Ir a mi Cuenta">
         <Button sx={{ color: Colors.white, margin: ".5rem 0  0 .5rem" }}>
           <AccountCircleIcon />{" "}
         </Button>
@@ -97,7 +97,7 @@ const Navbar = () => {
         <AppBarContainer>
           <IconButton
             size="large"
-            aria-label="account of current user"
+            aria-label="Cuenta de usuario"
             aria-controls="menu-appbar"
             aria-haspopup="true"
             color="inherit"
@@ -118,7 +118,7 @@ const Navbar = () => {
             SHINE <DiamondIcon />
           </AppBarLogo>
 
-          <Link to={`/cart`} aria-label="Go to my Cart">
+          <Link to={`/cart`} aria-label="Ir a Carrito">
             <Button sx={{ color: "white" }}>
               <ShoppingCart />{" "}
               <Typography
@@ -139,7 +139,7 @@ const Navbar = () => {
                 to={`/${
                   page === "home" ? "" : page === "about" ? "waiting" : page
                 }`}
-                aria-label={`Go to page: ${
+                aria-label={`Ir a Página: ${
                   page === "home" ? "Home" : page === "about" ? "about" : page
                 }`}
               >
@@ -158,12 +158,12 @@ const Navbar = () => {
             ))}
           </ButtonGroup>
           <Box>
-            <Link to={`/account`} aria-label="Go to my Account Page">
+            <Link to={`/account`} aria-label="Ir a mi Perfil">
               <Button sx={{ color: "white" }}>
                 <AccountCircleIcon />{" "}
               </Button>
             </Link>
-            <Link to={`/cart`} aria-label="Go to my Cart">
+            <Link to={`/cart`} aria-label="Ir a mi Carrito">
               <Button sx={{ color: "white" }}>
                 <ShoppingCart />{" "}
                 <Typography
