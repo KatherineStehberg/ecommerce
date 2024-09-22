@@ -40,7 +40,7 @@ const HomePage = () => {
             En biodiversidad.cl te ofrecemos productos que respetan el medio ambiente, 
             apoyan la economía local y promueven la sostenibilidad.
           </Typography>
-          <MyButton component={Link} to="/productos" sx={{ mt: "2rem" }}>
+          <MyButton component={Link} to="./ProductsPage" sx={{ mt: "2rem" }}>
             Ver Productos <ArrowForwardIcon />
           </MyButton>
         </CardContent>
