@@ -6,7 +6,7 @@ import { removeUser } from "../features/user/UserSlice";
 import Orders from "../components/Orders";
 import { MyButton } from "../styles/buttons/buttons";
 import { PageContainer } from "../styles/page/containers";
-import { Typography, Button } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Output } from "@mui/icons-material";
 
 const AccountPage = () => {
@@ -15,7 +15,7 @@ const AccountPage = () => {
   return isAuth ? (
     <PageContainer>
       <Typography variant="h4" mb="1rem">
-        Welcome,
+        Bienvenido,
       </Typography>
       <Typography variant="h5" color="primary" mb="2rem">
         {email}
@@ -25,9 +25,9 @@ const AccountPage = () => {
         variant="contained"
         onClick={() => dispatch(removeUser())}
         endIcon={<Output />}
-        aria-label="Sign out"
+        aria-label="Cerrar sesión"
       >
-        Sign out
+        Cerrar sesión
       </MyButton>
     </PageContainer>
   ) : (
