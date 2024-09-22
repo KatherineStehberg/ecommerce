@@ -12,58 +12,53 @@ import {
 } from "@mui/material";
 import { Colors } from "../styles/theme/theme";
 import { PageContainer, MainImageBox } from "../styles/page/containers";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { MyButton } from "../styles/buttons/buttons";
 
 const HomePage = () => {
   const imageList = [
-    "https://images.unsplash.com/photo-1523381210434-271e8be1b0e7",
-    "https://images.unsplash.com/photo-1523381210434-271e8be1b0e8",
-    "https://images.unsplash.com/photo-1523381210434-271e8be1b0e9",
+    "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?fit=crop&w=700&q=60",
+    "https://images.unsplash.com/photo-1516762689617-e1cffcef479d?fit=crop&w=700&q=60",
+    "https://images.unsplash.com/photo-1479064555552-3ef4979f8908?fit=crop&w=700&q=60",
+    // Agrega más imágenes según sea necesario
   ];
 
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <PageContainer>
-      <MainImageBox>
-        <CardMedia
-          component="img"
-          alt="Conservación del medio ambiente"
-          image="https://images.unsplash.com/photo-1523381210434-271e8be1b0e7"
-          sx={{ height: 400, width: "100%", objectFit: "cover" }}
-        />
-      </MainImageBox>
-
-      <CardContent>
-        <Typography variant="h4" align="center" gutterBottom>
-          Bienvenidos a Nuestra Plataforma Sustentable
-        </Typography>
-
-        <Divider sx={{ margin: "1.5rem 0" }} />
-
-        <Typography variant="body1" align="center" gutterBottom>
-          Descubre productos y servicios amigables con el medio ambiente que promueven la biodiversidad y la conservación de nuestros recursos naturales. Únete a nuestro compromiso con un futuro más verde.
-        </Typography>
-
-        <Divider sx={{ margin: "1.5rem 0" }} />
-
-        <ImageList
-          sx={{ width: matches ? 800 : 360, margin: "0 auto" }}
-          cols={matches ? 3 : 1}
-          gap={12}
-        >
+      <MainImageBox sx={{ flexDirection: { xs: "column", md: "row" } }}>
+        <CardContent>
+          <Typography variant="h3" sx={{ mb: 2 }}>
+            Bienvenido a Nuestra Página
+          </Typography>
+          <Divider sx={{ mb: 2 }} />
+          <Typography variant="body1">
+            Explora nuestros productos y servicios para la biodiversidad.
+          </Typography>
+          <Link to="/productos">
+            <MyButton
+              variant="contained"
+              endIcon={<ArrowForwardIcon />}
+              sx={{ mt: 2 }}
+            >
+              Ver Productos
+            </MyButton>
+          </Link>
+        </CardContent>
+        <ImageList sx={{ width: isMobile ? "100%" : "50%", height: "auto" }}>
           {imageList.map((image) => (
             <ImageListItem key={image}>
               <CardMedia
                 component="img"
-                alt="Producto sustentable"
-                image={image}
-                sx={{ height: 200, objectFit: "cover" }}
+                src={image}
+                alt="Imagen relacionada"
               />
             </ImageListItem>
           ))}
         </ImageList>
-      </CardContent>
+      </MainImageBox>
     </PageContainer>
   );
 };
