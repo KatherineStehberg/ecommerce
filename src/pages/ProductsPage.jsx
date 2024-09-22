@@ -22,130 +22,74 @@ import { PageContainer } from "../styles/page/containers";
 import { useState, useEffect } from "react";
 
 const ProductsPage = () => {
-  const filterButtons = [
-    "All",
-    "Men's clothing",
-    "Women's clothing",
-    "Jewelery",
-    "Electronics",
-  ];
-
-  const sortingOptions = [
-    "Top Rated",
-    "Price (High to Low)",
-    "Price (Low to High)",
-  ];
-
-  const [sortingValue, setSortingValue] = useState("Top Rated");
-
   const dispatch = useDispatch();
-  const { filteredProducts, sortingOption } = useSelector(
-    (state) => state.products
-  );
+  const products = useSelector((state) => state.products.items);
+  const sortingOption = useSelector((state) => state.products.sortingOption);
+  
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-  const handleChange = (event) => {
-    setSortingValue(event.target.value);
+  // Maneja el cambio de categoría
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+    dispatch(filterProducts(event.target.value));
   };
 
-  useEffect(() => {
-    dispatch(setSortingOption(sortingValue));
-    dispatch(sortProducts());
-  }, [filteredProducts, sortingOption, sortingValue]);
-
-  useEffect(() => {
-    dispatch(setSortingOption("Top Rated"));
-  }, []);
+  // Maneja el cambio de orden de productos
+  const handleSortChange = (event) => {
+    dispatch(setSortingOption(event.target.value));
+    dispatch(sortProducts(event.target.value));
+  };
 
   return (
     <PageContainer>
-      <Typography variant="h4" sx={{ textAlign: "center", mb: "2rem" }}>
-        Shop by category
+      {/* Título de la página */}
+      <Typography variant="h4" sx={{ marginBottom: 2 }}>
+        Productos de Biodiversidad
       </Typography>
 
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: { md: "row", xs: "column" },
-        }}
-      >
-        <ButtonGroup
-          sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}
-          color="primary"
-          aria-label="medium secondary button group"
-        >
-          {filterButtons.map((button, key) => (
-            <Button
-              variant="contained"
-              sx={{ margin: ".5rem" }}
-              onClick={() => dispatch(filterProducts(button.toLowerCase()))}
-              key={key}
-              aria-label={button}
-            >
-              {button}
-            </Button>
-          ))}
-        </ButtonGroup>
-        <FormControl
-          sx={{ width: "13rem", margin: { xs: ".5rem" } }}
-          size="small"
-        >
+      {/* Filtros */}
+      <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+        <FormControl variant="outlined" sx={{ minWidth: 200 }}>
+          <InputLabel>Categoría</InputLabel>
           <Select
-            value={sortingValue}
-            displayEmpty
-            onChange={handleChange}
-            sx={{ padding: "" }}
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            label="Categoría"
           >
-            {sortingOptions.map((item) => (
-              <MenuItem value={item}>{item}</MenuItem>
-            ))}
+            <MenuItem value="">
+              <em>Todos los productos</em>
+            </MenuItem>
+            <MenuItem value="plantas">Plantas</MenuItem>
+            <MenuItem value="animales">Animales</MenuItem>
+            <MenuItem value="ecosistemas">Ecosistemas</MenuItem>
           </Select>
         </FormControl>
 
-        {/* <List component="nav" aria-label="Device settings">
-          <ListItem
-            button
-            aria-haspopup="listbox"
-            aria-controls="lock-menu"
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClickListItem}
-            sx={{
-              width: "10rem",
-              height: "2.35rem",
-              backgroundColor: Colors.primaryLight,
-              textAlign: "center",
-              borderRadius: "4px",
-              color: Colors.white,
-            }}
+        <FormControl variant="outlined" sx={{ minWidth: 200 }}>
+          <InputLabel>Ordenar por</InputLabel>
+          <Select
+            value={sortingOption}
+            onChange={handleSortChange}
+            label="Ordenar por"
           >
-            <ListItemText
-              secondary={sortingOptions[selectedIndex]}
-              sx={{ color: Colors.white }}
-            />
-          </ListItem>
-        </List>
-        <Menu
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            "aria-labelledby": "lock-button",
-            role: "listbox",
-          }}
-        >
-          {sortingOptions.map((option, index) => (
-            <MenuItem
-              key={option}
-              selected={index === selectedIndex}
-              onClick={(event) => handleMenuItemClick(event, index)}
-            >
-              {option}
-            </MenuItem>
-          ))}
-        </Menu> */}
+            <MenuItem value="price-asc">Precio: Bajo a Alto</MenuItem>
+            <MenuItem value="price-desc">Precio: Alto a Bajo</MenuItem>
+            <MenuItem value="name-asc">Nombre: A-Z</MenuItem>
+            <MenuItem value="name-desc">Nombre: Z-A</MenuItem>
+          </Select>
+        </FormControl>
       </Box>
-      <Products />
+
+      {/* Productos */}
+      <Products products={products} />
+
+      {/* Botones de acción */}
+      <Box sx={{ display: "flex", justifyContent: "center", marginTop: 4 }}>
+        <ButtonGroup variant="contained" aria-label="botones de acción">
+          <Button color="primary">Agregar al carrito</Button>
+          <Button color="secondary">Comprar ahora</Button>
+        </ButtonGroup>
+      </Box>
     </PageContainer>
   );
 };
