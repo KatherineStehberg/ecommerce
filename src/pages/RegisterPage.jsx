@@ -12,13 +12,16 @@ const RegisterPage = () => {
         sx={{ width: "20rem", margin: "0 auto", padding: "1.5rem 1rem" }}
       >
         <Typography variant="h4" mb="1rem">
-          Create an Account
+          Crear una Cuenta
         </Typography>
+        <Typography variant="body1" mb="1rem">
+          Regístrate para acceder a productos y servicios sustentables.
+        </Typography>
+        <Divider />
         <Register />
-        <Divider textAlign="center" />
-        <Typography variant="subtitle1" mt="2rem">
-          Already have an account?
-          <Link to="/login"> Login</Link>
+        <Typography variant="body2" mt="1rem">
+          ¿Ya tienes una cuenta?{" "}
+          <Link to="/login">Inicia sesión aquí</Link>
         </Typography>
       </Paper>
     </PageContainer>
